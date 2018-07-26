@@ -2,8 +2,6 @@ package it.unimib.disco.asia.backend.response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import it.unimib.disco.asia.backend.requestResult.Result;
-
 public class ConciliatorResult {
 
 	private String conciliator;
