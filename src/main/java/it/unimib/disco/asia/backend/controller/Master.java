@@ -1,39 +1,30 @@
 package it.unimib.disco.asia.backend.controller;
 
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-
-import org.apache.commons.lang3.ArrayUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.unimib.disco.asia.backend.response.Conciliator;
+import it.unimib.disco.asia.backend.response.ConciliatorResult;
+import it.unimib.disco.asia.backend.response.Result;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import it.unimib.disco.asia.backend.response.ConciliatorResult;
-import it.unimib.disco.asia.backend.response.Result;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.*;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Master {
 
-	private static final String[] allowedConciliators = {"orcid", "openlibrary", "viaf", "wikifier", "geonames", "geotargets", "productsservices"};
 	private static final String baseUrl = "http://localhost:8080/reconcile/";
-	private Map<String, List<ConciliatorResult>> map = new HashMap<String, List<ConciliatorResult>>();
+	private Map<String, List<ConciliatorResult>> map = new HashMap<>();
 
 
 	@RequestMapping(value = "reconcile", produces = "application/json")
-	public String master0 ( @RequestParam (value = "queries") String queries,
+	public String reconcile ( @RequestParam (value = "queries") String queries,
 			@RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -43,20 +34,14 @@ public class Master {
 	}
 
 
-	@RequestMapping(value = "multireconcile", produces = "application/json")
-	public  Map<String, List<ConciliatorResult>> master ( @RequestParam (value = "queries") String queries,
-			@RequestParam (value = "conciliators", required = false) String conciliators ) throws Exception {
+	@RequestMapping(value = "suggest", produces = "application/json")
+	public  Map<String, List<ConciliatorResult>> suggest ( @RequestParam (value = "queries") String queries,
+			@RequestParam (value = "group") String group ) throws Exception {
 		
 		map.clear();
-		
-		if(conciliators != null) {
-			for( String conciliator : conciliators.split(","))
-				if(Arrays.asList(allowedConciliators).contains(conciliator))
-					query(queries, conciliator);
-		}
-		else {
-			for( String conciliator : allowedConciliators)
-				query(queries, conciliator);
+
+		for( Conciliator conciliator : Services.services().get(group)) {
+			query(queries, conciliator.getId());
 		}
 
 		return map;
@@ -76,7 +61,7 @@ public class Master {
 			conciliatorResult.setConciliator(conciliator);
 			conciliatorResult.setResult(list);
 
-			List<ConciliatorResult> value = new ArrayList<ConciliatorResult>();
+			List<ConciliatorResult> value = new ArrayList<>();
 			if (map.containsKey(q))
 				value = map.get(q);
 			value.add(conciliatorResult);
