@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +23,12 @@ import it.unimib.disco.asia.backend.response.ConciliatorResult;
 import it.unimib.disco.asia.backend.response.Result;
 
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Master {
 
 	private static final String[] allowedConciliators = {"orcid", "openlibrary", "viaf", "wikifier", "geonames", "geotargets", "productsservices"};
-	private static final String baseUrl = "http://localhost/reconcile/";
+	private static final String baseUrl = "http://localhost:8080/reconcile/";
 	private Map<String, List<ConciliatorResult>> map = new HashMap<String, List<ConciliatorResult>>();
 
 
