@@ -6,11 +6,10 @@ public class Conciliator {
 
     private String id;
     private String name;
+    private String identifierSpace;
 
-    public Conciliator(String id, String name) {
+    public Conciliator(String id) {
         this.id = id;
-        this.name = name;
-
     }
 
     public String getId() {
@@ -27,6 +26,14 @@ public class Conciliator {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIdentifierSpace() {
+        return identifierSpace;
+    }
+
+    public void setIdentifierSpace(String identifierSpace) {
+        this.identifierSpace = identifierSpace;
     }
 
     public String toString() {
