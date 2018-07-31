@@ -44,8 +44,8 @@ public class Services {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(new URL(baseUrl + c.getId()));
 
-                c.setName(root.get("name").toString());
-                c.setIdentifierSpace(root.get("identifierSpace").toString());
+                c.setName(root.get("name").asText());
+                c.setIdentifierSpace(root.get("identifierSpace").asText());
             }
         }
 
