@@ -46,6 +46,7 @@ public class Services {
 
                 c.setName(root.get("name").asText());
                 c.setIdentifierSpace(root.get("identifierSpace").asText());
+                c.setSchemaSpace(root.get("schemaSpace").asText());
             }
         }
 
