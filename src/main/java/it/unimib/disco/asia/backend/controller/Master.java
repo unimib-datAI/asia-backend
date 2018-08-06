@@ -33,6 +33,16 @@ public class Master {
 		return root.toString();
 	}
 
+	@RequestMapping(value = "extend", produces = "application/json")
+	public String extend ( @RequestParam (value = "extend") String extend,
+							  @RequestParam (value = "conciliator") String conciliator ) throws Exception {
+
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.readTree(new URL(baseUrl + conciliator + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
+
+		return root.toString();
+	}
+
 
 	@RequestMapping(value = "suggest", produces = "application/json")
 	public  Map<String, List<ConciliatorResult>> suggest ( @RequestParam (value = "queries") String queries,
