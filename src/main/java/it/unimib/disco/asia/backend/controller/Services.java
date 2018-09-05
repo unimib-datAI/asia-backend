@@ -3,6 +3,8 @@ package it.unimib.disco.asia.backend.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.response.Conciliator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +16,11 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@Configuration
 public class Services {
 
-    private static final String baseUrl = "http://localhost:8080/reconcile/";
+    @Value("${conciliator.endpoint:http://localhost:8080/reconcile/}")
+    private String baseUrl;
 
     private static final Map<String, Conciliator[]> services = new HashMap<>();
     static {
@@ -37,7 +41,7 @@ public class Services {
     }
 
 	@RequestMapping(value = "services", produces = "application/json")
-	public static Map<String, Conciliator[]> services() throws IOException {
+	public Map<String, Conciliator[]> services() throws IOException {
 
         for (Map.Entry<String, Conciliator[]> entry : services.entrySet()) {
             for (Conciliator c: entry.getValue()) {

@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+      asiabackend:
+        build:
+          context: .
+          dockerfile: ./docker/Dockerfile
+        image: miciav/asiabackend

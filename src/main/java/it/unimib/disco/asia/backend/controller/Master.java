@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.response.Conciliator;
 import it.unimib.disco.asia.backend.response.ConciliatorResult;
 import it.unimib.disco.asia.backend.response.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +21,12 @@ import java.util.*;
 @RestController
 public class Master {
 
-	private static final String baseUrl = "http://localhost:8080/reconcile/";
+	@Value("${conciliator.endpoint:http://localhost:8080/reconcile/}")
+	private String baseUrl;
+
+	@Autowired
+	Services services;
+
 	private Map<String, List<ConciliatorResult>> map = new HashMap<>();
 
 
@@ -50,7 +57,7 @@ public class Master {
 		
 		map.clear();
 
-		for( Conciliator conciliator : Services.services().get(group)) {
+		for( Conciliator conciliator : services.services().get(group)) {
 			query(queries, conciliator.getId());
 		}
 

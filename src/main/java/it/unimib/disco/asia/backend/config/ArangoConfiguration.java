@@ -4,12 +4,18 @@ import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDB.Builder;
 import com.arangodb.springframework.annotation.EnableArangoRepositories;
 import com.arangodb.springframework.config.AbstractArangoConfiguration;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
+import java.util.logging.Logger;
 
 @Configuration
 @EnableArangoRepositories(basePackages = { "it.unimib.disco.asia.backend" })
 public class ArangoConfiguration extends AbstractArangoConfiguration {
+
+    private static final Logger logger = Logger.getLogger(ArangoConfiguration.class.getName());
 
     @Value( "${arango.host:localhost}" )
     String host;
@@ -28,6 +34,7 @@ public class ArangoConfiguration extends AbstractArangoConfiguration {
 
     @Override
     public Builder arango() {
+        //logConfiguration();
         return new ArangoDB.Builder().host(this.host, this.port).user(this.user).password(this.password);
     }
 
@@ -35,4 +42,15 @@ public class ArangoConfiguration extends AbstractArangoConfiguration {
     public String database() {
         return this.dbName;
     }
+
+
+    @PostConstruct
+    public void logConfiguration(){
+
+        logger.info("Arango ip: "+host);
+        logger.info("Arango port: "+port);
+        logger.info("Arango user: "+user);
+        logger.info("Arango dbName: "+dbName);
+    }
+
 }
