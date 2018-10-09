@@ -2,11 +2,11 @@ package it.unimib.disco.asia.backend.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.unimib.disco.asia.backend.config.ConciliatorConfig;
 import it.unimib.disco.asia.backend.response.Conciliator;
 import it.unimib.disco.asia.backend.response.ConciliatorResult;
 import it.unimib.disco.asia.backend.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +21,8 @@ import java.util.*;
 @RestController
 public class Master {
 
-	@Value("${conciliator.endpoint:http://localhost:8080/reconcile/}")
-	private String baseUrl;
+	@Autowired
+	ConciliatorConfig conciliatorConfig;
 
 	@Autowired
 	Services services;
@@ -35,7 +35,7 @@ public class Master {
 			@RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(new URL(baseUrl + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
+		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
 
 		return root.toString();
 	}
@@ -45,7 +45,7 @@ public class Master {
 							  @RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(new URL(baseUrl + conciliator + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
+		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
 
 		return root.toString();
 	}
@@ -67,7 +67,7 @@ public class Master {
 
 	private void query(String queries, String conciliator) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(new URL(baseUrl + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
+		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
 		Iterator<String> it = root.fieldNames();
 
 		while(it.hasNext()) {

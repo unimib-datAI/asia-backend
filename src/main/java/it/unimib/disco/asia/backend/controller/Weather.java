@@ -1,17 +1,14 @@
 package it.unimib.disco.asia.backend.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import it.unimib.disco.asia.backend.model.WeatherObservation;
-import org.apache.commons.lang3.StringUtils;
+import it.unimib.disco.asia.backend.repository.WeatherObservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.unimib.disco.asia.backend.repository.WeatherObservationRepository;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
