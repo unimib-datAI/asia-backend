@@ -31,23 +31,23 @@ public class Master {
 
 
 	@RequestMapping(value = "reconcile", produces = "application/json")
-	public String reconcile ( @RequestParam (value = "queries") String queries,
+	public JsonNode reconcile ( @RequestParam (value = "queries") String queries,
 			@RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
 
-		return root.toString();
+		return root;
 	}
 
 	@RequestMapping(value = "extend", produces = "application/json")
-	public String extend ( @RequestParam (value = "extend") String extend,
+	public JsonNode extend ( @RequestParam (value = "extend") String extend,
 							  @RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
 
-		return root.toString();
+		return root;
 	}
 
 
