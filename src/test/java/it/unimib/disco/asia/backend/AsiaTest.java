@@ -13,10 +13,10 @@ import java.net.URLEncoder;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT) // loads server.port from config file
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class AsiaTest {
 
-    private static final String asiaEndpoint = "http://localhost:7000/";
+    private static final String asiaEndpoint = "http://localhost:8080/";
 
     private String reconcile(String label, String type, double threshold, String conciliator) {
         try {
