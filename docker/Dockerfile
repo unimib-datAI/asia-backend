@@ -7,6 +7,9 @@ ENV ARANGO_USER="root"
 ENV ARANGO_DB_NAME="arango-demo"
 ENV ARANGO_PASSWORD="null"
 ENV CONCILIATOR_ENDPOINT="http://conciliator:8080/reconcile/"
+ENV VIRTUOSO_ENDPOINT="http:virtuoso:8890/sparql"
+ENV VIRTUOSO_GRAPH_NAME="http://virtuoso:8890/exactMatch"
+ENV VIRTUOSO_MATCH_PROPERTY_PREFIX="http://data.businessgraph.io/"
 
 ADD target/*.jar /app.jar
 
