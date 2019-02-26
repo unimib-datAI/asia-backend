@@ -7,8 +7,38 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "virtuoso")
 public class VirtuosoConfig {
     private String endpoint;
-    private String graphName;
-    private String matchPropertyPrefix;
+
+    public static class GeoGraph {
+        private String graphName;
+        private String matchPropertyPrefix;
+        private String rulesSetName;
+
+        public String getGraphName() {
+            return graphName;
+        }
+
+        public void setGraphName(String graphName) {
+            this.graphName = graphName;
+        }
+
+        public String getMatchPropertyPrefix() {
+            return matchPropertyPrefix;
+        }
+
+        public void setMatchPropertyPrefix(String matchPropertyPrefix) {
+            this.matchPropertyPrefix = matchPropertyPrefix;
+        }
+
+        public String getRulesSetName() {
+            return rulesSetName;
+        }
+
+        public void setRulesSetName(String rulesSetName) {
+            this.rulesSetName = rulesSetName;
+        }
+    }
+
+    private GeoGraph geoGraph;
 
     public String getEndpoint() {
         return endpoint;
@@ -18,19 +48,11 @@ public class VirtuosoConfig {
         this.endpoint = endpoint;
     }
 
-    public String getGraphName() {
-        return graphName;
+    public GeoGraph getGeoGraph() {
+        return geoGraph;
     }
 
-    public void setGraphName(String graphName) {
-        this.graphName = graphName;
-    }
-
-    public String getMatchPropertyPrefix() {
-        return matchPropertyPrefix;
-    }
-
-    public void setMatchPropertyPrefix(String matchPropertyPrefix) {
-        this.matchPropertyPrefix = matchPropertyPrefix;
+    public void setGeoGraph(GeoGraph geoGraph) {
+        this.geoGraph = geoGraph;
     }
 }

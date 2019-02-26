@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.config.ConciliatorConfig;
 import it.unimib.disco.asia.backend.config.VirtuosoConfig;
+import it.unimib.disco.asia.backend.model.Service;
 import it.unimib.disco.asia.backend.response.*;
 import org.apache.jena.query.*;
+import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +30,21 @@ public class ExactMatch {
     @Autowired
     ConciliatorConfig conciliatorConfig;
 
-    @RequestMapping(value = "exactMatch", produces = "application/json")
-    public MatchResult<String> getExactMatch(@RequestParam(value = "ids") String idsList,
+    @RequestMapping(value = "geoExactMatch", produces = "application/json")
+    public MatchResult<String> getGeoExactMatch(@RequestParam(value = "ids") String idsList,
                                      @RequestParam(value = "source") String source,
                                      @RequestParam(value = "target") String target) throws Exception {
 
         Conciliator sourceConciliator = this.getServiceMetadata(source);
 
-        String matchProp = String.format("%s%s2%s", virtuosoConfig.getMatchPropertyPrefix(), source, target);
+        String matchProp;
+
+        // Assumption: all KBs are linked to GeoNames (star model)
+        if (source.equalsIgnoreCase(Service.GEONAMES.getId()) || target.equalsIgnoreCase(Service.GEONAMES.getId())) {
+            matchProp = String.format(":%s2%s", source, target);
+        } else {
+            matchProp = String.format(":%s2geonames/:geonames2%s", source, target);
+        }
 
         String[] geoIdsStr = idsList.split(",");
 
@@ -60,18 +69,27 @@ public class ExactMatch {
         }
 
         String queryString = String.format(
-                "SELECT ?source ?prop ?target\n" +
+                "DEFINE input:inference '%s'\n" +
+                        "PREFIX : <%s>\n" +
+                        "SELECT ?source ?target\n" +
+                        "FROM <%s>\n" +
                         "WHERE\n" +
                         "{\n" +
-                        "  ?source <%s> ?target .\n" +
+                        "  ?source %s ?target .\n" +
                         "  VALUES ?source { %s }\n" +
                         "}",
-                matchProp, String.join(" ", uriToId.keySet()));
+                virtuosoConfig.getGeoGraph().getRulesSetName(),
+                virtuosoConfig.getGeoGraph().getMatchPropertyPrefix(),
+                virtuosoConfig.getGeoGraph().getGraphName(),
+                matchProp,
+                String.join(" ", uriToId.keySet()));
 
-        Query sparqlQuery = QueryFactory.create(queryString);
+//        Query sparqlQuery = QueryFactory.create(queryString);
 
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService(virtuosoConfig.getEndpoint(), sparqlQuery, virtuosoConfig.getGraphName())) {
-            ResultSet sparqlResults = qexec.execSelect();
+        try (QueryEngineHTTP request = new QueryEngineHTTP(
+                virtuosoConfig.getEndpoint(),
+                queryString)) {
+            ResultSet sparqlResults = request.execSelect();
             while (sparqlResults.hasNext()) {
                 QuerySolution soln = sparqlResults.nextSolution();
                 matchResult.getRows()
@@ -80,7 +98,7 @@ public class ExactMatch {
                         .add(new Match(soln.getResource("target").getURI()));
             }
         } catch (Exception e) {
-            return null;
+            throw e;
         }
 
         return matchResult;
