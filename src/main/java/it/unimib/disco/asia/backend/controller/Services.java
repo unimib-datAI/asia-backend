@@ -3,6 +3,7 @@ package it.unimib.disco.asia.backend.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.config.ConciliatorConfig;
+import it.unimib.disco.asia.backend.model.Service;
 import it.unimib.disco.asia.backend.response.Conciliator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,14 +25,14 @@ public class Services {
     private static final Map<String, Conciliator[]> services = new HashMap<>();
     static {
         Conciliator[] general = {
-                new Conciliator("wikifier")
+                new Conciliator(Service.WIKIFIER.getId())
         };
         Conciliator[] geo = {
-                new Conciliator("geonames"),
-                new Conciliator("geotargets")
+                new Conciliator(Service.GEONAMES.getId()),
+                new Conciliator(Service.GEOTARGETS.getId())
         };
         Conciliator[] category = {
-                new Conciliator("productsservices")
+                new Conciliator(Service.GOOGLECAT.getId())
         };
 
         services.put("general", general);
