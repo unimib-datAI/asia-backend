@@ -4,4 +4,4 @@ services:
         build:
           context: .
           dockerfile: ./docker/Dockerfile
-        image: miciav/asiabackend
+        image: vcutrona/asiabackend
