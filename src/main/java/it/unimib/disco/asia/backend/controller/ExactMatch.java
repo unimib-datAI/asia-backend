@@ -30,6 +30,9 @@ public class ExactMatch {
     @Autowired
     ConciliatorConfig conciliatorConfig;
 
+    private final String MATCH_PROPERTY_ID = "http://www.w3.org/2004/02/skos/core#exactMatch";
+    private final String MATCH_PROPERTY_NAME = "exactMatch";
+
     @RequestMapping(value = "geoExactMatch", produces = "application/json")
     public MatchResult<String> getGeoExactMatch(@RequestParam(value = "ids") String idsList,
                                      @RequestParam(value = "source") String source,
@@ -52,15 +55,15 @@ public class ExactMatch {
         MatchResult<String> matchResult = new MatchResult<>();
 
         MatchMetaData mmd = new MatchMetaData();
-        mmd.setId(matchProp);
-        mmd.setName(matchProp.substring(matchProp.lastIndexOf("/") + 1));
+        mmd.setId(this.MATCH_PROPERTY_ID);
+        mmd.setName(this.MATCH_PROPERTY_NAME);
 
         matchResult.setMeta(mmd);
         matchResult.setRows(new HashMap<>());
 
         for (String geoId: geoIdsStr) {
             MatchList<String> matchList = new MatchList<>();
-            matchList.put(matchProp, new ArrayList<>());
+            matchList.put(this.MATCH_PROPERTY_NAME, new ArrayList<>());
             matchResult.getRows().put(geoId, matchList);
 
             String geoIdUri = String.format("%s%s", sourceConciliator.getIdentifierSpace(), geoId);
@@ -84,8 +87,6 @@ public class ExactMatch {
                 matchProp,
                 String.join(" ", uriToId.keySet()));
 
-//        Query sparqlQuery = QueryFactory.create(queryString);
-
         try (QueryEngineHTTP request = new QueryEngineHTTP(
                 virtuosoConfig.getEndpoint(),
                 queryString)) {
@@ -94,11 +95,11 @@ public class ExactMatch {
                 QuerySolution soln = sparqlResults.nextSolution();
                 matchResult.getRows()
                         .get(uriToId.get(String.format("<%s>", soln.getResource("source").getURI())))
-                        .get(matchProp)
+                        .get(this.MATCH_PROPERTY_NAME)
                         .add(new Match(soln.getResource("target").getURI()));
             }
         } catch (Exception e) {
-            throw e;
+            return null;
         }
 
         return matchResult;
