@@ -20,16 +20,20 @@ public class Events {
 	@RequestMapping(value = "events", produces = "application/json")
 	public String getEvents(@RequestParam(value = "ids") String idsList,
 							 @RequestParam(value = "dates") String datesList,
-							 @RequestParam(value = "categories") String categoriesList) throws Exception {
+							 @RequestParam(value = "categories", required = false) String categoriesList) throws Exception {
 
 		String[] geoIds = idsList.split(",");
 		String[] dates = datesList.split(",");
-		String[] categories = categoriesList.split(",");
-
 		Date[] datesISO = new Date[dates.length];
 		for (int i = 0; i < dates.length; i++)
 			datesISO[i] = new SimpleDateFormat("yyyy-MM-dd").parse(dates[i]);
-		return eventRepo.eventQuery(geoIds, datesISO, categories).toString();
+
+		if (categoriesList == null) {
+			return eventRepo.eventQuery(geoIds, datesISO).toString();
+		} else {
+			String[] categories = categoriesList.split(",");
+			return eventRepo.eventWithCategoriesQuery(geoIds, datesISO, categories).toString();
+		}
 	}
 
 }
