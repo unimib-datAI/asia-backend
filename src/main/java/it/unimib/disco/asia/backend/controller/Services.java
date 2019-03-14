@@ -19,8 +19,7 @@ import java.util.Map;
 @RestController
 public class Services {
 
-    @Autowired
-    ConciliatorConfig conciliatorConfig;
+    private final ConciliatorConfig conciliatorConfig;
 
     private static final Map<String, Conciliator[]> services = new HashMap<>();
     static {
@@ -40,7 +39,12 @@ public class Services {
         services.put("category", category);
     }
 
-	@RequestMapping(value = "services", produces = "application/json")
+    @Autowired
+    public Services(ConciliatorConfig conciliatorConfig) {
+        this.conciliatorConfig = conciliatorConfig;
+    }
+
+    @RequestMapping(value = "services", produces = "application/json")
 	public Map<String, Conciliator[]> services() throws IOException {
 
         for (Map.Entry<String, Conciliator[]> entry : services.entrySet()) {
@@ -51,6 +55,11 @@ public class Services {
                 c.setName(root.get("name").asText());
                 c.setIdentifierSpace(root.get("identifierSpace").asText());
                 c.setSchemaSpace(root.get("schemaSpace").asText());
+                if (root.has("extend") && root.get("extend").has("propose_properties")) {
+                    JsonNode proposeProperties = root.get("extend").get("propose_properties");
+                    c.setProposePropertiesEndpoint(proposeProperties.get("service_url").asText() +
+                            proposeProperties.get("service_path").asText());
+                }
             }
         }
 

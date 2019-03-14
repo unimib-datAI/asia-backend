@@ -12,22 +12,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.stream.Stream;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Master {
 
-	@Autowired
-	ConciliatorConfig conciliatorConfig;
-
-	@Autowired
-	Services services;
-
+	private final ConciliatorConfig conciliatorConfig;
+	private final Conciliator[] services;
 	private Map<String, List<ConciliatorResult>> map = new HashMap<>();
+
+	@Autowired
+	public Master(ConciliatorConfig conciliatorConfig, Services services) throws IOException {
+		this.conciliatorConfig = conciliatorConfig;
+		this.services = services.services().values().stream().flatMap(Stream::of).toArray(Conciliator[]::new);
+	}
 
 
 	@RequestMapping(value = "reconcile", produces = "application/json")
@@ -50,6 +54,26 @@ public class Master {
 		return root;
 	}
 
+	@RequestMapping(value = "propose_properties", produces = "application/json")
+	public JsonNode proposeProperties ( @RequestParam (value = "type", required = false) String type,
+							 @RequestParam (value = "limit", required = false) Integer limit,
+							 @RequestParam (value = "conciliator") String conciliator ) throws Exception {
+
+		if (limit == null) {
+			limit = 10;
+		}
+
+		String parameters = "?limit=" + limit;
+		if (type != null) {
+			parameters += "&type=" + URLEncoder.encode(type, "UTF-8");
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		Conciliator c = Stream.of(services).filter(x -> x.getId().equalsIgnoreCase(conciliator)).findAny().get();
+		return mapper.readTree(new URL(c.getProposePropertiesEndpoint() + parameters));
+
+	}
+
 
 	@RequestMapping(value = "suggest", produces = "application/json")
 	public  Map<String, List<ConciliatorResult>> suggest ( @RequestParam (value = "queries") String queries,
@@ -57,7 +81,7 @@ public class Master {
 		
 		map.clear();
 
-		for( Conciliator conciliator : services.services().get(group)) {
+		for (Conciliator conciliator : services ) {
 			query(queries, conciliator.getId());
 		}
 

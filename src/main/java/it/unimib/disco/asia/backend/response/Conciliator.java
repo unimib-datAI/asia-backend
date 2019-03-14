@@ -8,6 +8,7 @@ public class Conciliator {
     private String name;
     private String identifierSpace;
     private String schemaSpace;
+    private String proposePropertiesEndpoint;
 
     public Conciliator(String id) {
         this.id = id;
@@ -43,6 +44,14 @@ public class Conciliator {
 
     public void setSchemaSpace(String schemaSpace) {
         this.schemaSpace = schemaSpace;
+    }
+
+    public String getProposePropertiesEndpoint() {
+        return proposePropertiesEndpoint;
+    }
+
+    public void setProposePropertiesEndpoint(String proposePropertiesEndpoint) {
+        this.proposePropertiesEndpoint = proposePropertiesEndpoint;
     }
 
     public String toString() {
