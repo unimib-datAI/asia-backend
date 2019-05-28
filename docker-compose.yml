@@ -4,4 +4,4 @@ services:
         build:
           context: .
           dockerfile: ./docker/Dockerfile
-        image: vcutrona/asiabackend:1.0.1
+        image: vcutrona/asiabackend:1.0.2

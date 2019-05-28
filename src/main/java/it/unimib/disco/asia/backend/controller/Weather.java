@@ -14,13 +14,14 @@ import java.util.Date;
 @RestController
 public class Weather {
 
+	private final String[] CUMULATED_PARAMS = {"sf", "sund", "ssr", "tp"};
+
 	@Autowired
 	private WeatherObservationRepository weatherRepo;
 
 	@RequestMapping(value = "weather", produces = "application/json")
 	public String getWeather(@RequestParam(value = "ids") String idsList,
 							 @RequestParam(value = "dates") String datesList,
-							 @RequestParam(value = "aggregators") String aggregatorsList,
 							 @RequestParam(value = "weatherParams") String paramsList,
 							 @RequestParam(value = "offsets") String offsetsList) throws Exception {
 
@@ -28,7 +29,6 @@ public class Weather {
 		String[] dates = datesList.split(",");
 		String[] weatherParams = paramsList.split(",");
 		String[] weatherOffsetsStr = offsetsList.split(",");
-		String[] aggregators = aggregatorsList.split(",");
 
         int[] geoIds = new int[geoIdsStr.length];
         for (int i = 0; i < geoIdsStr.length; ++i) {
@@ -43,7 +43,7 @@ public class Weather {
 		Date[] datesISO = new Date[dates.length];
 		for (int i = 0; i < dates.length; i++)
 			datesISO[i] = new SimpleDateFormat("yyyy-MM-dd").parse(dates[i]);
-		return weatherRepo.weatherQuery(geoIds, datesISO, aggregators, weatherParams, weatherOffsets).toString();
+		return weatherRepo.weatherQuery(geoIds, datesISO, this.CUMULATED_PARAMS, weatherParams, weatherOffsets).toString();
 	}
 
 }

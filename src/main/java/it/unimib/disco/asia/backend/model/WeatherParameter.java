@@ -1,15 +1,19 @@
 package it.unimib.disco.asia.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeatherParameter {
 
     private String id;
-    private String value;
+    private Double minValue;
+    private Double maxValue;
+    private Double avgValue;
+    private Double cumulValue;
 
-    public WeatherParameter(String id, String value) {
+    public WeatherParameter(String id) {
         this.id = id;
-        this.value = value;
     }
 
     public String getId() {
@@ -20,12 +24,36 @@ public class WeatherParameter {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public Double getMinValue() {
+        return minValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setMinValue(Double minValue) {
+        this.minValue = minValue;
+    }
+
+    public Double getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(Double maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public Double getAvgValue() {
+        return avgValue;
+    }
+
+    public void setAvgValue(Double avgValue) {
+        this.avgValue = avgValue;
+    }
+
+    public Double getCumulValue() {
+        return cumulValue;
+    }
+
+    public void setCumulValue(Double cumulValue) {
+        this.cumulValue = cumulValue;
     }
 
     @Override

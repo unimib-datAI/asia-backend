@@ -2,17 +2,13 @@ package it.unimib.disco.asia.backend.model;
 
 import com.arangodb.springframework.annotation.Document;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.data.annotation.Id;
-
-import java.util.Date;
 
 @Document("weather-observation")
 public class WeatherObservation {
 
     private String geonamesId;
 
-    private String validTime;
-    private String validityDateTime;
+    private String date;
     private WeatherParameter[] weatherParameters;
     private int offset;
 
@@ -24,20 +20,12 @@ public class WeatherObservation {
         this.geonamesId = geonamesId;
     }
 
-    public String getValidTime() {
-        return validTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setValidTime(String validTime) {
-        this.validTime = validTime;
-    }
-
-    public String getValidityDateTime() {
-        return validityDateTime;
-    }
-
-    public void setValidityDateTime(String validityDateTime) {
-        this.validityDateTime = validityDateTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public WeatherParameter[] getWeatherParameters() {
