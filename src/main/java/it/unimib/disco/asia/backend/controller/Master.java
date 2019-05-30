@@ -7,16 +7,15 @@ import it.unimib.disco.asia.backend.response.Conciliator;
 import it.unimib.disco.asia.backend.response.ConciliatorResult;
 import it.unimib.disco.asia.backend.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.stream.Stream;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,13 +23,14 @@ import java.util.stream.Stream;
 public class Master {
 
 	private final ConciliatorConfig conciliatorConfig;
-	private final Conciliator[] services;
+	private final Services services;
 	private Map<String, List<ConciliatorResult>> map = new HashMap<>();
 
 	@Autowired
-	public Master(ConciliatorConfig conciliatorConfig, Services services) throws IOException {
+	@Lazy
+	public Master(ConciliatorConfig conciliatorConfig, Services services) {
 		this.conciliatorConfig = conciliatorConfig;
-		this.services = services.services().values().stream().flatMap(Stream::of).toArray(Conciliator[]::new);
+		this.services = services;
 	}
 
 
@@ -64,13 +64,13 @@ public class Master {
 		}
 
 		String parameters = "?limit=" + limit;
-		if (type != null) {
+		if (type != null && !type.isEmpty()) {
 			parameters += "&type=" + URLEncoder.encode(type, "UTF-8");
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
-		Conciliator c = Stream.of(services).filter(x -> x.getId().equalsIgnoreCase(conciliator)).findAny().get();
-		return mapper.readTree(new URL(c.getProposePropertiesEndpoint() + parameters));
+		System.out.println(new URL(services.getConciliator(conciliator).getProposePropertiesEndpoint() + parameters).toURI());
+		return mapper.readTree(new URL(services.getConciliator(conciliator).getProposePropertiesEndpoint() + parameters));
 
 	}
 
@@ -81,7 +81,7 @@ public class Master {
 		
 		map.clear();
 
-		for (Conciliator conciliator : services ) {
+		for (Conciliator conciliator : services.getConciliatorsByGroup(group) ) {
 			query(queries, conciliator.getId());
 		}
 
