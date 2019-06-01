@@ -8,7 +8,6 @@ import it.unimib.disco.asia.backend.response.ConciliatorResult;
 import it.unimib.disco.asia.backend.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,6 @@ import java.net.URLEncoder;
 import java.util.*;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class Master {
 

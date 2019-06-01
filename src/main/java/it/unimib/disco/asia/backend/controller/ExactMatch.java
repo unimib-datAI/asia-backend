@@ -6,10 +6,10 @@ import it.unimib.disco.asia.backend.config.ConciliatorConfig;
 import it.unimib.disco.asia.backend.config.VirtuosoConfig;
 import it.unimib.disco.asia.backend.model.Service;
 import it.unimib.disco.asia.backend.response.*;
-import org.apache.jena.query.*;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import org.apache.jena.sparql.engine.http.QueryEngineHTTP;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ExactMatch {
 

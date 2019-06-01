@@ -7,7 +7,6 @@ import it.unimib.disco.asia.backend.model.Service;
 import it.unimib.disco.asia.backend.response.Conciliator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @Lazy
 public class Services {
