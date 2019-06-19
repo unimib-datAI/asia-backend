@@ -32,12 +32,13 @@ public class ExactMatch {
     private final String MATCH_PROPERTY_ID = "http://www.w3.org/2004/02/skos/core#exactMatch";
     private final String MATCH_PROPERTY_NAME = "exactMatch";
 
-    @RequestMapping(value = "geoExactMatch", produces = "application/json")
+    @RequestMapping(value = "exactMatch", produces = "application/json")
     public MatchResult<String> getGeoExactMatch(@RequestParam(value = "ids") String idsList,
                                      @RequestParam(value = "source") String source,
                                      @RequestParam(value = "target") String target) throws Exception {
 
         Conciliator sourceConciliator = this.getServiceMetadata(source);
+        Conciliator targetConciliator = this.getServiceMetadata(target);
 
         String matchProp;
 
@@ -95,7 +96,7 @@ public class ExactMatch {
                 matchResult.getRows()
                         .get(uriToId.get(String.format("<%s>", soln.getResource("source").getURI())))
                         .get(this.MATCH_PROPERTY_NAME)
-                        .add(new Match(soln.getResource("target").getURI()));
+                        .add(new Match(soln.getResource("target").getURI().replaceAll(targetConciliator.getIdentifierSpace(), "")));
             }
         } catch (Exception e) {
             return null;

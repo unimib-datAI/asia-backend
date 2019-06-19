@@ -2,17 +2,31 @@ package it.unimib.disco.asia.backend.response;
 
 public class Match {
 
-    private String str;
+    private String id;
+    private String name;
 
-    public Match(String str) {
-        this.str = str;
+    public Match(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public String getStr() {
-        return str;
+    public Match(String id) {
+       this(id, id);
     }
 
-    public void setStr(String str) {
-        this.str = str;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
