@@ -48,7 +48,7 @@ The list of third party licenses can be found in:
 ```
 <project_dir>\src\license\THIRD-PARTY.txt
 ```
-To update le list of third party license file run:
+To update the list of third party license file run:
 ```shell script
 $ mvn license:add-third-party  
 ```
