@@ -41,3 +41,14 @@ http://localhost:8080/reconcile/master?queries={ "q0" : { "query" : "foo", "type
 
 
 **conciliators**: is a comma-separated list of conciliator ids you want to take in account. If not specified every conciliator will be considered.
+
+
+# Third party licenses
+The list of third party licenses can be found in:
+```
+<project_dir>\src\license\THIRD-PARTY.txt
+```
+To update le list of third party license file run:
+```shell script
+$ mvn license:add-third-party  
+```
