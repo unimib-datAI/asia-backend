@@ -22,7 +22,8 @@ public class Services {
 
     private final ConciliatorConfig conciliatorConfig;
 
-    private static Map<String, Conciliator[]> services = new HashMap<>();
+//    create a list of conciliator groups to be exposed to Grafterizer.
+private static Map<String, Conciliator[]> services = new HashMap<>();
     static {
         Conciliator[] general = {
                 new Conciliator(Service.WIKIFIER.getId())
@@ -34,10 +35,14 @@ public class Services {
         Conciliator[] category = {
                 new Conciliator(Service.GOOGLECAT.getId())
         };
+        Conciliator[] keywords = {
+                new Conciliator(Service.CATEGORYFIND.getId())
+        };
 
-        services.put("general", general);
-        services.put("geo", geo);
-        services.put("category", category);
+        services.put("general", general);   // general conciliators
+        services.put("geo", geo);           // geographical conciliators
+        services.put("category", category); // product category conciliators
+        services.put("keywords", keywords); // product category conciliators
     }
 
     @Autowired
@@ -46,11 +51,12 @@ public class Services {
         services = this.services();
     }
 
+
     @RequestMapping(value = "services", produces = "application/json")
 	public Map<String, Conciliator[]> services() throws IOException {
 
-        for (Map.Entry<String, Conciliator[]> entry : services.entrySet()) {
-            for (Conciliator c: entry.getValue()) {
+        for (Map.Entry<String, Conciliator[]> entry : services.entrySet())
+            for (Conciliator c : entry.getValue()) {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + c.getId()));
 
@@ -63,7 +69,6 @@ public class Services {
                             proposeProperties.get("service_path").asText());
                 }
             }
-        }
 
         return services;
 	}

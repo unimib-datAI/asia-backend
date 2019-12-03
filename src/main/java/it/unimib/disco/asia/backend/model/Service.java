@@ -1,13 +1,17 @@
 package it.unimib.disco.asia.backend.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Enumerate all services exposed by the Conciliator
- * TODO: the conciliator should expose a /list method to retrieve all the identifiers
  */
 public enum Service {
     WIKIFIER("wikifier"),
     GEONAMES("geonames"),
     GEOTARGETS("geotargets"),
+    CATEGORYFIND("keywordsmatcher"),
     GOOGLECAT("productsservices");
 
     private String id;
@@ -19,4 +23,11 @@ public enum Service {
     public String getId() {
         return this.id;
     }
+
+    public static List<String> serviceList() {
+        return Stream.of(Service.values())
+                .map(Service::name)
+                .collect(Collectors.toList());
+    }
+
 }
