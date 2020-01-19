@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  kwservice:
+    image: miciav/keywordtocluster:1.0.0
+    ports:
+      - 8081:8080
+    volumes:
+      - ./files:/files
+
