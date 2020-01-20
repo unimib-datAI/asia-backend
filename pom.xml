@@ -14,6 +14,13 @@
         <version>1.5.9.RELEASE</version>
     </parent>
 
+    <properties>
+        <java.version>1.8</java.version>
+        <docker.image.name>asiabackend</docker.image.name>
+        <docker.image.version>1.0.3</docker.image.version>
+        <docker.account.name>XXXX</docker.account.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,7 +70,6 @@
             <artifactId>jena-arq</artifactId>
             <version>3.7.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>license-maven-plugin</artifactId>
@@ -71,10 +77,6 @@
         </dependency>
 
     </dependencies>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <build>
         <plugins>
@@ -109,6 +111,23 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <imageName>${docker.account.name}/${docker.image.name}:${docker.image.version}</imageName>
+                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <skipDocker>false</skipDocker>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
         </plugins>
 
