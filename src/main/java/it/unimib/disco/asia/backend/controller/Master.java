@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.config.ConciliatorConfig;
 import it.unimib.disco.asia.backend.response.Conciliator;
 import it.unimib.disco.asia.backend.response.ConciliatorResult;
+import it.unimib.disco.asia.backend.response.ExternalConciliator;
 import it.unimib.disco.asia.backend.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -37,7 +38,12 @@ public class Master {
 			@RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
+		Conciliator c = services.getConciliator(conciliator);
+		String endpoint = conciliatorConfig.getEndpoint() + c.getId();
+		if (c instanceof ExternalConciliator) {
+			endpoint = ((ExternalConciliator) c).getEndpoint();
+		}
+		JsonNode root = mapper.readTree(new URL(endpoint + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
 
 		return root;
 	}
@@ -46,8 +52,13 @@ public class Master {
 	public JsonNode extend ( @RequestParam (value = "extend") String extend,
 							  @RequestParam (value = "conciliator") String conciliator ) throws Exception {
 
+		Conciliator c = services.getConciliator(conciliator);
+		String endpoint = conciliatorConfig.getEndpoint() + c.getId();
+		if (c instanceof ExternalConciliator) {
+			endpoint = ((ExternalConciliator) c).getEndpoint();
+		}
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
+		JsonNode root = mapper.readTree(new URL(endpoint + "?extend=" + URLEncoder.encode(extend, "UTF-8")));
 
 		return root;
 	}
@@ -67,7 +78,6 @@ public class Master {
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
-		System.out.println(new URL(services.getConciliator(conciliator).getProposePropertiesEndpoint() + parameters).toURI());
 		return mapper.readTree(new URL(services.getConciliator(conciliator).getProposePropertiesEndpoint() + parameters));
 
 	}
@@ -87,7 +97,7 @@ public class Master {
 	}
 
 
-	private void query(String queries, String conciliator) throws Exception{
+	private void query(String queries, String conciliator) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + conciliator + "?queries=" + URLEncoder.encode(queries, "UTF-8")));
 		Iterator<String> it = root.fieldNames();

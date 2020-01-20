@@ -12,7 +12,8 @@ public enum Service {
     GEONAMES("geonames"),
     GEOTARGETS("geotargets"),
     CATEGORYFIND("keywordsmatcher"),
-    GOOGLECAT("productsservices");
+    GOOGLECAT("productsservices"),
+    WIKIDATA("wikidata");
 
     private String id;
 
