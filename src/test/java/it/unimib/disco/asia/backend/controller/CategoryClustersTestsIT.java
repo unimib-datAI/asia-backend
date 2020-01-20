@@ -63,6 +63,15 @@ public class CategoryClustersTestsIT {
         assertThat(kc[0].getCategories().size(), Matchers.is(1));
         assertThat(kc[0].getCategories(), Matchers.contains("/Ocasiones y regalos/Vacaciones y eventos estacionales/Halloween y 31 de octubre(13740)"));
 
+        Response response2 = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .param("kws", "casa,home")
+                .get("keywordscategories");
+
+        response2.getBody().prettyPrint();
+
+
     }
 
 

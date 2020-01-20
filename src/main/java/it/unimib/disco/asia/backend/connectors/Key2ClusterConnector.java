@@ -20,17 +20,17 @@ public class Key2ClusterConnector {
 
 
     final RestTemplate restTemplate = new RestTemplate();
-    private final UriComponentsBuilder builder;
+
     private final String url;
 
     public Key2ClusterConnector(KeywordClusterConfig serviceConfig) {
         url = serviceConfig.getBaseURI() + "/key2cluster/api/keywords";
-        builder = UriComponentsBuilder.fromUriString(url);
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
 
     public List<KeywordCategories> getCategoriesForMultiKeywords(String lstStrings) {
 
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
         UriComponents urlComponents = builder.queryParam("kws", lstStrings).build();
 
         ResponseEntity<KeywordCategories[]> res = restTemplate.getForEntity(
