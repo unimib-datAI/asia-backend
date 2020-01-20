@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unimib.disco.asia.backend.config.ConciliatorConfig;
 import it.unimib.disco.asia.backend.model.Service;
 import it.unimib.disco.asia.backend.response.Conciliator;
+import it.unimib.disco.asia.backend.response.ExternalConciliator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,11 @@ public class Services {
     private final ConciliatorConfig conciliatorConfig;
 
 //    create a list of conciliator groups to be exposed to Grafterizer.
-private static Map<String, Conciliator[]> services = new HashMap<>();
+    private static Map<String, Conciliator[]> services = new HashMap<>();
     static {
         Conciliator[] general = {
-                new Conciliator(Service.WIKIFIER.getId())
+                new Conciliator(Service.WIKIFIER.getId()),
+                new ExternalConciliator(Service.WIKIDATA.getId(), "https://tools.wmflabs.org/openrefine-wikidata/en/api")
         };
         Conciliator[] geo = {
                 new Conciliator(Service.GEONAMES.getId()),
@@ -58,7 +60,11 @@ private static Map<String, Conciliator[]> services = new HashMap<>();
         for (Map.Entry<String, Conciliator[]> entry : services.entrySet())
             for (Conciliator c : entry.getValue()) {
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode root = mapper.readTree(new URL(conciliatorConfig.getEndpoint() + c.getId()));
+                String endpoint = conciliatorConfig.getEndpoint() + c.getId();
+                if (c instanceof ExternalConciliator) {
+                    endpoint = ((ExternalConciliator) c).getEndpoint();
+                }
+                JsonNode root = mapper.readTree(new URL(endpoint));
 
                 c.setName(root.get("name").asText());
                 c.setIdentifierSpace(root.get("identifierSpace").asText());
