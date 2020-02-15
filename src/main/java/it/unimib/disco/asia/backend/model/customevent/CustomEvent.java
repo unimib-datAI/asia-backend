@@ -30,6 +30,10 @@ public class CustomEvent<OneOfEventMeasure, OneOfEventProduct> {
     private String _id = null;
 
 
+    public String get_id() {
+        return _id;
+    }
+
     /**
      * It defines semantically the event and cannot be changed. It has to be
      * 'ews:Event'

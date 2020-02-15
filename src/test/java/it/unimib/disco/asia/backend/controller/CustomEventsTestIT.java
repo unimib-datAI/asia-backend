@@ -26,11 +26,11 @@ import org.testcontainers.containers.DockerComposeContainer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static uk.co.datumedge.hamcrest.json.SameJSONAs.sameJSONAs;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -92,7 +92,7 @@ public class CustomEventsTestIT {
 
 
     @Test
-    public void testController() throws IOException {
+    public void testController1() throws IOException {
 
         customEventRepository.deleteAll();
 
@@ -110,18 +110,71 @@ public class CustomEventsTestIT {
 
         System.out.println(lst.get(0).get(0).getOperator());
 
-        List<List<CustomEventLogicBaseUnit>> sublist = lst.subList(0, 1);
+        List<List<CustomEventLogicBaseUnit>> sublist = lst.subList(0, 2);
 
         Response response = given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(sublist)
-                .get("customevents");
+                .get("customevents/match");
+
+
+        String s1 = response.getBody().asString();
+        String replace = s1.replace("[", "");
+        String replace1 = replace.replace(" ", "");
+        String replace2 = replace1.replace("]", "");
+
+        List<String> myList = new ArrayList<String>(Arrays.asList(replace2.split(",")));
+
+        System.out.println(myList.toString());
+        assertThat(myList.contains(savedEvent1.get_id()), Matchers.is(true));
+        assertThat(myList.contains(savedEvent2.get_id()), Matchers.is(true));
+    }
+
+
+    @Test
+    public void testController2() throws IOException {
+
+        customEventRepository.deleteAll();
+
+        CustomEvent customEvent1 = objectMapper.readValue(customEventStr1, CustomEvent.class);
+        CustomEvent customEvent2 = objectMapper.readValue(customEventStr2, CustomEvent.class);
+
+
+        CustomEvent savedEvent1 = customEventRepository.save(customEvent1);
+        CustomEvent savedEvent2 = customEventRepository.save(customEvent2);
+
+
+        String ids = savedEvent1.get_id() + "," + savedEvent2.get_id();
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .param("ids", ids)
+                .param("propIds", "measure.priceChanged,product.gtin13")
+                .get("customevents/select");
 
 
         response.getBody().prettyPrint();
+        List<Map<String, String>> lst = response.jsonPath().getList("$");
+
+        assertThat(lst.size(), Matchers.is(2));
+        assertThat(lst.get(0).containsKey("measure.priceChanged"), Matchers.is(true));
+
+
+        String mystr = "[{\"id\": \"" + savedEvent1.get_id() + "\",\"measure.priceChanged\": true,\"product.gtin13\": \"8718863014653\"" +
+                "    },{\"id\": \"" + savedEvent2.get_id() + "\"," +
+                "        \"measure.priceChanged\": true," +
+                "        \"product.gtin13\": \"8801643703257\"" +
+                "    }" +
+                "]";
+        assertThat(
+                response.jsonPath().prettyPrint(),
+                sameJSONAs(mystr)
+                        .allowingExtraUnexpectedFields()
+                        .allowingAnyArrayOrdering());
+
 
     }
-
 
 }

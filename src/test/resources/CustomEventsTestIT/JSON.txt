@@ -21,21 +21,21 @@
   ],
   [
     {
-      "propertyID": "name",
-      "operator": "=",
-      "value": "20170706",
+      "propertyID": "startDate",
+      "operator": "==",
+      "value": "2019-05-14",
       "isColumn": true
     },
     {
-      "propertyID": "surname",
-      "operator": "+",
-      "value": "handball bundesliga spielplan",
+      "propertyID": "product.gtin13",
+      "operator": "==",
+      "value": "8801643703257",
       "isColumn": true
     },
     {
-      "propertyID": "address",
-      "operator": "-",
-      "value": "ConstantValue",
+      "propertyID": "measure.priceChange",
+      "operator": "<",
+      "value": "30",
       "isColumn": false
     }
   ],

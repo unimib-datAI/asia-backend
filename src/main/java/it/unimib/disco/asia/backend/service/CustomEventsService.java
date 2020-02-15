@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sisyphsu.dateparser.DateParserUtils;
 import com.google.common.base.Strings;
 import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicBaseUnit;
+import it.unimib.disco.asia.backend.repository.CustomEventRepository;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.context.annotation.Lazy;
@@ -25,17 +26,20 @@ import java.util.Map;
 @Lazy
 public class CustomEventsService {
 
+
+    private final CustomEventRepository customEventRepository;
     private final ArangoOperations template;
     private final ObjectMapper objectMapper;
 
 
-    public CustomEventsService(ArangoOperations template) {
+    public CustomEventsService(ArangoOperations template, CustomEventRepository customEventRepository) {
         this.template = template;
         this.objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.customEventRepository = customEventRepository;
     }
 
 
-    public List retrieveIds(List<List<CustomEventLogicBaseUnit>> lstLogicUnit) {
+    public List<String> retrieveIds(List<List<CustomEventLogicBaseUnit>> lstLogicUnit) {
         Pair<String, Map<String, Object>> pair = buildIdQuery(lstLogicUnit);
         ArangoCursor<String> returnedEvent =
                 template.query(pair.getFirst(),
@@ -44,6 +48,35 @@ public class CustomEventsService {
 
 
         return IteratorUtils.toList(returnedEvent);
+    }
+
+    public List<String> findByIds(String[] eventIds, String[] propertyIDs) {
+
+        String base = " for event in `CustomEvents`\n" + " FILTER  \n";
+        StringBuilder stringBuilder = new StringBuilder(base);
+        Map<String, Object> bindVars = new HashMap<>();
+        stringBuilder.append("event._id IN @ids \n ");
+        bindVars.put("ids", eventIds);
+        stringBuilder.append("RETURN {\n");
+        String baseValue = "@value";
+        stringBuilder.append("\"id\": " + "event._id\n");
+
+        for (int i = 0; i < propertyIDs.length; i++) {
+            stringBuilder.append(",\n");
+            stringBuilder.append("\"" + propertyIDs[i] + "\": " + "event." + propertyIDs[i]);
+        }
+        stringBuilder.append("\n}");
+
+        System.out.println(stringBuilder.toString());
+
+        ArangoCursor<String> returnedEvent =
+                template.query(stringBuilder.toString(),
+                        bindVars,
+                        new AqlQueryOptions(), String.class);
+
+
+        return IteratorUtils.toList(returnedEvent);
+
     }
 
     private Pair<String, Map<String, Object>> buildIdQuery(List<List<CustomEventLogicBaseUnit>> lstLogicUnit) {
@@ -63,9 +96,9 @@ public class CustomEventsService {
 
         }
 
-        stringBuilder.append("RETURN event.identifier");
+        stringBuilder.append("RETURN event._id");
 
-        System.out.println(stringBuilder.toString());
+//        System.out.println(stringBuilder.toString());
 
         return Pair.of(stringBuilder.toString(), bindVars);
     }
