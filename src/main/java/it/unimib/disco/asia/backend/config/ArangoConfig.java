@@ -84,4 +84,5 @@ public class ArangoConfig extends AbstractArangoConfiguration {
         logger.info("Arango dbName: "+dbName);
     }
 
+
 }

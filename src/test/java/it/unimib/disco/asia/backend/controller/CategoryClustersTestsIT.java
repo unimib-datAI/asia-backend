@@ -31,7 +31,7 @@ public class CategoryClustersTestsIT {
     @ClassRule
     public static DockerComposeContainer compose =
             new DockerComposeContainer(
-                    new File("src/test/docker/docker-compose.yml")).withLocalCompose(true);
+                    new File("src/test/docker/CategoryClustersTestsIT/docker-compose.yml")).withLocalCompose(true);
     @Autowired
     private KeywordClusterConfig config;
     @LocalServerPort

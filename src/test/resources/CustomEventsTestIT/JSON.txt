@@ -1,0 +1,582 @@
+[
+  [
+    {
+      "propertyID": "startDate",
+      "operator": "==",
+      "value": "2019-05-14",
+      "isColumn": true
+    },
+    {
+      "propertyID": "product.identifier",
+      "operator": "==",
+      "value": "9577242",
+      "isColumn": true
+    },
+    {
+      "propertyID": "measure.priceChanged",
+      "operator": "==",
+      "value": "True",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170706",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170101",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fitness training",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20171203",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "kinder kampfsport",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170706",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170706",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170606",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170910",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170113",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball dummies",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170706",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170202",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball live sport",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170612",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball turnierplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20171129",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170215",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "autogramm fussball",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170103",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball dummies",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170909",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170928",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170915",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball bundesliga 2016",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170911",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20171220",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fitness meerbusch",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20171021",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball bundesliga 2016",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170912",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170102",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "fussball dummies",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170623",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20171226",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "kraftsport",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170102",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "autogramm fussball",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170713",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170713",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "handball bundesliga spielplan",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ],
+  [
+    {
+      "propertyID": "name",
+      "operator": "=",
+      "value": "20170204",
+      "isColumn": true
+    },
+    {
+      "propertyID": "surname",
+      "operator": "+",
+      "value": "biathlon training",
+      "isColumn": true
+    },
+    {
+      "propertyID": "address",
+      "operator": "-",
+      "value": "ConstantValue",
+      "isColumn": false
+    }
+  ]
+]

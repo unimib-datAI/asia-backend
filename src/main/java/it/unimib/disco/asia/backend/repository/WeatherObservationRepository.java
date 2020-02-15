@@ -1,9 +1,9 @@
 package it.unimib.disco.asia.backend.repository;
 
+
 import com.arangodb.springframework.annotation.Param;
 import com.arangodb.springframework.annotation.Query;
 import com.arangodb.springframework.repository.ArangoRepository;
-
 import it.unimib.disco.asia.backend.model.WeatherObservation;
 
 import java.util.Date;

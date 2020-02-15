@@ -1,5 +1,6 @@
 package it.unimib.disco.asia.backend.repository;
 
+
 import com.arangodb.springframework.annotation.Param;
 import com.arangodb.springframework.annotation.Query;
 import com.arangodb.springframework.repository.ArangoRepository;
@@ -7,7 +8,7 @@ import it.unimib.disco.asia.backend.model.Event;
 
 import java.util.Date;
 
-public interface EventRepository extends ArangoRepository<Event>{
+public interface EventRepository extends ArangoRepository<Event> {
 
 	@Query("let isoDates = (for d in @dates return DATE_FORMAT(DATE_ISO8601(d), \"%yyyy-%mm-%dd\"))\n" +
 			"for event in `events`\n" +

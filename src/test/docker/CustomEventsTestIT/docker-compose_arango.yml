@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  arangodb:
+    image: arangodb:latest
+    restart: always
+    environment:
+      - ARANGO_ROOT_PASSWORD=openSesame
+    #      - ARANGO_RANDOM_ROOT_PASSWORD=1
+    #      - ARANGO_NO_AUTH=0
+    ports:
+      - 8529:8529
+    volumes:
+      - ./db:/var/lib/arangodb3
+#  app:
+#    image: miciav/eventsdownloader:0.1
+#    environment:
+#      - ARANGO_HOST=arangodb
+#      - ARANGO_USER=root
+#      - ARANGO_PASSWORD=openSesame
+#      - ARANGO_EVENTS=events
+#      - API=https://cep.cocos.si/nodeproxy/cep/v1/customEvents/event/
+#    expose:
+#      - 8080
+#    depends_on:
+#      - arangodb
