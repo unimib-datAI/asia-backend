@@ -1,0 +1,54 @@
+[
+  {
+    "key": [
+      "2019-05-14",
+      "9577242"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "2019-05-14",
+        "isColumn": true
+      },
+      {
+        "propertyID": "product.identifier",
+        "operator": "==",
+        "value": "9577242",
+        "isColumn": true
+      },
+      {
+        "propertyID": "measure.priceChanged",
+        "operator": "==",
+        "value": "True",
+        "isColumn": false
+      }
+    ]
+  },
+  {
+    "key": [
+      "2019-05-14",
+      "12429022"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "2019-05-14",
+        "isColumn": true
+      },
+      {
+        "propertyID": "product.identifier",
+        "operator": "==",
+        "value": "12429022",
+        "isColumn": true
+      },
+      {
+        "propertyID": "measure.priceChange",
+        "operator": "<",
+        "value": "30",
+        "isColumn": false
+      }
+    ]
+  }
+]

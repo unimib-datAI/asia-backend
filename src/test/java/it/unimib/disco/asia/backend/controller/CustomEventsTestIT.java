@@ -10,14 +10,16 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import it.unimib.disco.asia.backend.model.customevent.CustomEvent;
-import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicBaseUnit;
+import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicRequest;
 import it.unimib.disco.asia.backend.repository.CustomEventRepository;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +28,9 @@ import org.testcontainers.containers.DockerComposeContainer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -92,7 +96,7 @@ public class CustomEventsTestIT {
 
 
     @Test
-    public void testController1() throws IOException {
+    public void testController1() throws IOException, JSONException {
 
         customEventRepository.deleteAll();
 
@@ -103,14 +107,16 @@ public class CustomEventsTestIT {
         CustomEvent savedEvent1 = customEventRepository.save(customEvent1);
         CustomEvent savedEvent2 = customEventRepository.save(customEvent2);
 
+        List<CustomEventLogicRequest> customEventLogicRequests = objectMapper.readValue(new File("src/test/resources/CustomEventsTestIT/request.json"), new TypeReference<List<CustomEventLogicRequest>>() {
+        });
 
-        List<List<CustomEventLogicBaseUnit>> lst = objectMapper.readValue(new File("src/test/resources/CustomEventsTestIT/JSON.txt"),
-                new TypeReference<List<List<CustomEventLogicBaseUnit>>>() {
-                });
+//        List<List<CustomEventLogicBaseUnit>> lst = objectMapper.readValue(new File("src/test/resources/CustomEventsTestIT/JSON.txt"),
+//                new TypeReference<List<List<CustomEventLogicBaseUnit>>>() {
+//                });
 
-        System.out.println(lst.get(0).get(0).getOperator());
+        System.out.println(customEventLogicRequests.get(0).getFilters().get(0).getOperator());
 
-        List<List<CustomEventLogicBaseUnit>> sublist = lst.subList(0, 2);
+        List<CustomEventLogicRequest> sublist = customEventLogicRequests.subList(0, 2);
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -119,16 +125,11 @@ public class CustomEventsTestIT {
                 .get("customevents/match");
 
 
-        String s1 = response.getBody().asString();
-        String replace = s1.replace("[", "");
-        String replace1 = replace.replace(" ", "");
-        String replace2 = replace1.replace("]", "");
+        System.out.println(response.body().asString());
+        String mystr = "[{\"key\":[\"2019-05-14\",\"12429022\"],\"results\":[\"" + savedEvent2.get_id() + "\"]}, {\"key\":[\"2019-05-14\",\"9577242\"],\"results\":[\"" + savedEvent1.get_id() + "\"]}]";
 
-        List<String> myList = new ArrayList<String>(Arrays.asList(replace2.split(",")));
+        JSONAssert.assertEquals(mystr, response.body().asString(), false);
 
-        System.out.println(myList.toString());
-        assertThat(myList.contains(savedEvent1.get_id()), Matchers.is(true));
-        assertThat(myList.contains(savedEvent2.get_id()), Matchers.is(true));
     }
 
 

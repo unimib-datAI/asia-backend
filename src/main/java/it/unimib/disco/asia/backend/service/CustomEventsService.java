@@ -8,19 +8,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.sisyphsu.dateparser.DateParserUtils;
 import com.google.common.base.Strings;
 import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicBaseUnit;
+import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicRequest;
 import it.unimib.disco.asia.backend.repository.CustomEventRepository;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.json.JSONArray;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Lazy
@@ -39,15 +38,19 @@ public class CustomEventsService {
     }
 
 
-    public List<String> retrieveIds(List<List<CustomEventLogicBaseUnit>> lstLogicUnit) {
+    public List<String> retrieveIds(List<CustomEventLogicRequest> lstLogicUnit) {
         Pair<String, Map<String, Object>> pair = buildIdQuery(lstLogicUnit);
         ArangoCursor<String> returnedEvent =
                 template.query(pair.getFirst(),
                         pair.getSecond(),
                         new AqlQueryOptions(), String.class);
 
+        List<String> listToReturn = new ArrayList<>();
+        while (returnedEvent.hasNext()) {
+            listToReturn.add(returnedEvent.next());
+        }
 
-        return IteratorUtils.toList(returnedEvent);
+        return listToReturn;
     }
 
     public List<String> findByIds(String[] eventIds, String[] propertyIDs) {
@@ -79,26 +82,46 @@ public class CustomEventsService {
 
     }
 
-    private Pair<String, Map<String, Object>> buildIdQuery(List<List<CustomEventLogicBaseUnit>> lstLogicUnit) {
+    private Pair<String, Map<String, Object>> buildIdQuery(List<CustomEventLogicRequest> lstLogicUnit) {
+
 
         int genIndex = 0;
 
-        String base = " for event in `CustomEvents`\n" + " FILTER  \n";
+        String base = "let q = (for event in `CustomEvents`\n" + " FILTER  \n";
         StringBuilder stringBuilder = new StringBuilder(base);
         Map<String, Object> bindVars = new HashMap<>();
-
-
         for (int extI = 0; extI < lstLogicUnit.size(); extI++) {
-            List<CustomEventLogicBaseUnit> lstUnits = lstLogicUnit.get(extI);
+            List<CustomEventLogicBaseUnit> lstUnits = lstLogicUnit.get(extI).getFilters();
 
             if (extI != 0) stringBuilder.append("OR\n");
             genIndex = buildSubQuery(genIndex, stringBuilder, bindVars, lstUnits);
 
         }
+        stringBuilder.append("RETURN event)\n");
 
-        stringBuilder.append("RETURN event._id");
+        for (int extI = 0; extI < lstLogicUnit.size(); extI++) {
+            List<CustomEventLogicBaseUnit> lstUnits = lstLogicUnit.get(extI).getFilters();
+            stringBuilder.append("let q" + extI + " = ( for event in q\n FILTER  \n");
+            genIndex = buildSubQuery(genIndex, stringBuilder, bindVars, lstUnits);
+            stringBuilder.append("RETURN {\n");
+            stringBuilder.append("\"key\": " + new JSONArray(lstLogicUnit.get(extI).getKey()) + ",\n");
+            stringBuilder.append("\"id\": event._id\n}\n)");
 
-//        System.out.println(stringBuilder.toString());
+        }
+
+        //union
+        stringBuilder.append("let united = union(");
+        for (int extI = 0; extI < lstLogicUnit.size(); extI++) {
+            if (extI != 0) stringBuilder.append(",");
+            stringBuilder.append("q" + extI);
+        }
+        stringBuilder.append(")\n");
+
+        //collect
+        stringBuilder.append("for e in united\n collect key = e.key into group\n");
+        stringBuilder.append("return {\n \"key\": key,\n \"results\":  group[*].e.id\n}");
+
+        System.out.println(stringBuilder.toString());
 
         return Pair.of(stringBuilder.toString(), bindVars);
     }
