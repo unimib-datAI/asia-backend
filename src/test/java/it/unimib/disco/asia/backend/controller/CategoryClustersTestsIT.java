@@ -47,6 +47,25 @@ public class CategoryClustersTestsIT {
     }
 
     @Test
+    public void getCategoriesPerKeywordUTF8() {
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .param("kws", "bauernhöfe in niedersachsen")
+                .get("keywordscategories");
+
+
+        response.getBody().prettyPrint();
+        KeywordCategories[] kc = response.then().assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .as(KeywordCategories[].class);
+        assertThat(kc[0].getCategories().size(), Matchers.is(0));
+
+    }
+
+
+    @Test
     public void getCategoriesPerKeyword() {
         Response response = given()
                 .contentType(ContentType.JSON)

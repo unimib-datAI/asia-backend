@@ -17,9 +17,10 @@ public class CategoryClusters {
         this.connector = connector;
     }
 
-    @RequestMapping(value = "keywordscategories", produces = "application/json")
+    @RequestMapping(value = "keywordscategories", produces = "application/json;charset=UTF-8")
     public List<KeywordCategories> getWeather(@RequestParam(value = "kws") String keywords) throws Exception {
         //as input we get comma-separated keywords
+//        System.out.println(keywords);
         return connector.getCategoriesForMultiKeywords(keywords);
 
     }

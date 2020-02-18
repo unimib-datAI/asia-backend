@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Lazy
@@ -20,24 +20,21 @@ public class Key2ClusterConnector {
 
 
     final RestTemplate restTemplate = new RestTemplate();
-
     private final String url;
 
     public Key2ClusterConnector(KeywordClusterConfig serviceConfig) {
-        url = serviceConfig.getBaseURI() + "/key2cluster/api/keywords";
+        url = serviceConfig.getBaseURI() + "/key2cluster/api/keywords?kws={keywords}";
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
-
     public List<KeywordCategories> getCategoriesForMultiKeywords(String lstStrings) {
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
-        UriComponents urlComponents = builder.queryParam("kws", lstStrings).build();
-
+//        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+//        UriComponents urlComponents = builder.queryParam("kws", lstStrings).build();
+        Map<String, String> uriVariables = new HashMap<>();
+        uriVariables.put("keywords", lstStrings);
         ResponseEntity<KeywordCategories[]> res = restTemplate.getForEntity(
-                urlComponents.toUri(),
-                KeywordCategories[].class);
-
+                url,
+                KeywordCategories[].class,
+                uriVariables);
         return Arrays.asList(res.getBody());
-
     }
 }
