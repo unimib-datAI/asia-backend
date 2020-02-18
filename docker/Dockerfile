@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-ENV JAVA_OPTS="-XX:+HeapDumpOnOutOfMemoryError -Xmx512m -Xmx256m"
+ENV JAVA_OPTS="-XX:+HeapDumpOnOutOfMemoryError -Xmx512m -Xms256m"
 ENV ARANGO_HOST="localhost"
 ENV ARANGO_PORT=8529
 ENV ARANGO_USER="root"
