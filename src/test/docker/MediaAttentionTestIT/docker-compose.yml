@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+  arangodb:
+    image: miciav/mediaattention:1.0
+    restart: always
+    ports:
+      - 1338:1338

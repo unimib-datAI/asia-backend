@@ -27,8 +27,7 @@ public class Key2ClusterConnector {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
     public List<KeywordCategories> getCategoriesForMultiKeywords(String lstStrings) {
-//        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
-//        UriComponents urlComponents = builder.queryParam("kws", lstStrings).build();
+
         Map<String, String> uriVariables = new HashMap<>();
         uriVariables.put("keywords", lstStrings);
         ResponseEntity<KeywordCategories[]> res = restTemplate.getForEntity(
