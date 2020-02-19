@@ -4,10 +4,7 @@ package it.unimib.disco.asia.backend.controller;
 import it.unimib.disco.asia.backend.model.customevent.CustomEventLogicRequest;
 import it.unimib.disco.asia.backend.service.CustomEventsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class CustomEvents {
     @Autowired
     private CustomEventsService customEventsService;
 
-    @RequestMapping(value = "customevents/match", produces = "application/json")
+    @RequestMapping(value = "customevents/match", produces = "application/json", method = RequestMethod.POST)
     public String matchCustomEvents(@RequestBody List<CustomEventLogicRequest> lstLogic) {
 
 

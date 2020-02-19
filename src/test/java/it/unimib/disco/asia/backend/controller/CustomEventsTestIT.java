@@ -122,7 +122,7 @@ public class CustomEventsTestIT {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .body(sublist)
-                .get("customevents/match");
+                .post("customevents/match");
 
 
         System.out.println(response.body().asString());

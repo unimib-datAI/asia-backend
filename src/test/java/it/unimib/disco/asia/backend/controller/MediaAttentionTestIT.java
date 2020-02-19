@@ -46,7 +46,7 @@ public class MediaAttentionTestIT {
 
         MediaAttentionRequest request = new MediaAttentionRequest();
         request.setCategories(Arrays.asList("football", "music"));
-        request.setDates(Arrays.asList("2017-02-01", "2017-02-03"));
+        request.setDates(Arrays.asList("20170201", "2017-02-03"));
         request.setForecast_offset(-1);
         request.setFeatures(Arrays.asList("EventsCounts", "ArticlesCounts"));
 
