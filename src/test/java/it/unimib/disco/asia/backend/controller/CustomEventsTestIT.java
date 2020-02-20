@@ -118,6 +118,7 @@ public class CustomEventsTestIT {
 
         List<CustomEventLogicRequest> sublist = customEventLogicRequests.subList(0, 2);
 
+
         Response response = given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)

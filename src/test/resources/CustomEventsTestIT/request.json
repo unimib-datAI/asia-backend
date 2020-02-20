@@ -8,7 +8,7 @@
       {
         "propertyID": "startDate",
         "operator": "==",
-        "value": "2019-05-14",
+        "value": "20190514",
         "isColumn": true
       },
       {
@@ -34,7 +34,7 @@
       {
         "propertyID": "startDate",
         "operator": "==",
-        "value": "2019-05-14",
+        "value": "20190514",
         "isColumn": true
       },
       {

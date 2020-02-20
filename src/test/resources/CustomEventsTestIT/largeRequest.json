@@ -1,0 +1,379 @@
+[
+  {
+    "key": [
+      "20171212"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171212",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170706"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170706",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170101"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170101",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20171203"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171203",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170706"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170706",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170706"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170706",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170606"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170606",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170910"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170910",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170113"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170113",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170706"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170706",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170202"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170202",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170612"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170612",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20171129"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171129",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170215"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170215",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170103"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170103",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170909"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170909",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170928"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170928",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170915"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170915",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170911"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170911",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20171220"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171220",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20171021"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171021",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170912"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170912",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170102"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170102",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170623"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170623",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20171226"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20171226",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170102"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170102",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170713"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170713",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170713"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170713",
+        "isColumn": true
+      }
+    ]
+  },
+  {
+    "key": [
+      "20170204"
+    ],
+    "filters": [
+      {
+        "propertyID": "startDate",
+        "operator": "==",
+        "value": "20170204",
+        "isColumn": true
+      }
+    ]
+  }
+]

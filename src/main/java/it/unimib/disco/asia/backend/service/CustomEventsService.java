@@ -121,7 +121,9 @@ public class CustomEventsService {
         stringBuilder.append("for e in united\n collect key = e.key into group\n");
         stringBuilder.append("return {\n \"key\": key,\n \"results\":  group[*].e.id\n}");
 
-        System.out.println(stringBuilder.toString());
+//        System.out.println(stringBuilder.toString());
+
+//        System.out.println(bindVars.toString());
 
         return Pair.of(stringBuilder.toString(), bindVars);
     }
@@ -134,18 +136,46 @@ public class CustomEventsService {
         for (int i = 0; i < lstUnits.size(); i++) {
             String value = lstUnits.get(i).getValue();
             if (i != 0) stringBuilder.append("AND\n ");
-            if (NumberUtils.isParsable(value)) {
+            boolean isNumeric = NumberUtils.isParsable(value);
+            boolean isDate = checkDate(value);
+
+
+            if (isNumeric & !isDate) {
                 genIndex = buildAlternativeNumericSubQuery(genIndex, stringBuilder, bindVars, lstUnits.get(i));
+            } else if (isDate & !isNumeric) {
+                genIndex = buildAlternativeDateSubQuery(genIndex, stringBuilder, bindVars, lstUnits.get(i));
+            } else if (isDate & isNumeric) {
+                genIndex = buildTripleAlternativeNumericDateSubQuery(genIndex, stringBuilder, bindVars, lstUnits.get(i));
             } else if (checkBoolean(value)) {
                 genIndex = buildAlternativeBooleanSubQuery(genIndex, stringBuilder, bindVars, lstUnits.get(i));
-            } else if (checkDate(value)) {
-                genIndex = buildAlternativeDateSubQuery(genIndex, stringBuilder, bindVars, lstUnits.get(i));
             } else {
                 genIndex = buildGeneralSubQuery(genIndex, stringBuilder, bindVars,
                         lstUnits.get(i).getPropertyID(), lstUnits.get(i).getOperator(), lstUnits.get(i).getValue());
             }
         }
         stringBuilder.append(")\n ");
+        return genIndex;
+    }
+
+    private int buildTripleAlternativeNumericDateSubQuery(int genIndex, StringBuilder stringBuilder, Map<String, Object> bindVars, CustomEventLogicBaseUnit unit) {
+        stringBuilder.append("(\n ");
+        genIndex = buildGeneralSubQuery(genIndex, stringBuilder, bindVars,
+                unit.getPropertyID(), unit.getOperator(), unit.getValue());
+        stringBuilder.append("OR\n");
+        genIndex = buildGeneralSubQuery(genIndex, stringBuilder, bindVars,
+                unit.getPropertyID(), unit.getOperator(), Float.parseFloat(unit.getValue()));
+
+        stringBuilder.append("OR\n");
+        String date = DateParserUtils.parseDateTime(unit.getValue()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        String value = "@value" + genIndex;
+        bindVars.put("value" + genIndex, date);
+        genIndex += 1;
+
+        stringBuilder.append("DATE_TRUNC(event." + unit.getPropertyID() + ", \"day\")" + " " + unit.getOperator() + " DATE_TRUNC(" + value + ", \"day\")");
+        stringBuilder.append(System.getProperty("line.separator")); //newline
+        stringBuilder.append(")\n ");
+
         return genIndex;
     }
 
@@ -171,7 +201,7 @@ public class CustomEventsService {
         bindVars.put("value" + genIndex, date);
         genIndex += 1;
 
-        stringBuilder.append("DATE_TRUNC(event." + unit.getPropertyID() + ", \"day\")" + " " + unit.getOperator() + " " + value);
+        stringBuilder.append("DATE_TRUNC(event." + unit.getPropertyID() + ", \"day\")" + " " + unit.getOperator() + " DATE_TRUNC(" + value + ", \"day\")");
         stringBuilder.append(System.getProperty("line.separator")); //newline
         stringBuilder.append(")\n ");
 
