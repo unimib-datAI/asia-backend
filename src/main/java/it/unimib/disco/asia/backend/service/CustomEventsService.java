@@ -108,21 +108,24 @@ public class CustomEventsService {
             stringBuilder.append("\"id\": event._id\n}\n)");
 
         }
+        if (lstLogicUnit.size() > 1) {
+            //union
+            stringBuilder.append("let united = union(");
+            for (int extI = 0; extI < lstLogicUnit.size(); extI++) {
+                if (extI != 0) stringBuilder.append(",");
+                stringBuilder.append("q" + extI);
+            }
+            stringBuilder.append(")\n");
 
-        //union
-        stringBuilder.append("let united = union(");
-        for (int extI = 0; extI < lstLogicUnit.size(); extI++) {
-            if (extI != 0) stringBuilder.append(",");
-            stringBuilder.append("q" + extI);
+            //collect
+            stringBuilder.append("for e in united\n collect key = e.key into group\n");
+        } else {
+            stringBuilder.append("for e in q0\n collect key = e.key into group\n");
         }
-        stringBuilder.append(")\n");
-
-        //collect
-        stringBuilder.append("for e in united\n collect key = e.key into group\n");
         stringBuilder.append("return {\n \"key\": key,\n \"results\":  group[*].e.id\n}");
 
-//        System.out.println(stringBuilder.toString());
-
+//       System.out.println(stringBuilder.toString());
+//
 //        System.out.println(bindVars.toString());
 
         return Pair.of(stringBuilder.toString(), bindVars);

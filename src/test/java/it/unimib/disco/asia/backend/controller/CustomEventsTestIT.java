@@ -133,6 +133,41 @@ public class CustomEventsTestIT {
 
     }
 
+    @Test
+    public void testSingleQueyr() throws IOException, JSONException {
+
+        customEventRepository.deleteAll();
+
+        CustomEvent customEvent1 = objectMapper.readValue(customEventStr1, CustomEvent.class);
+        CustomEvent customEvent2 = objectMapper.readValue(customEventStr2, CustomEvent.class);
+
+
+        CustomEvent savedEvent1 = customEventRepository.save(customEvent1);
+        CustomEvent savedEvent2 = customEventRepository.save(customEvent2);
+
+        List<CustomEventLogicRequest> customEventLogicRequests = objectMapper.readValue(new File("src/test/resources/CustomEventsTestIT/request.json"), new TypeReference<List<CustomEventLogicRequest>>() {
+        });
+
+
+        System.out.println(customEventLogicRequests.get(0).getFilters().get(0).getOperator());
+
+        List<CustomEventLogicRequest> sublist = customEventLogicRequests.subList(0, 1);
+
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .body(sublist)
+                .post("customevents/match");
+
+
+        System.out.println(response.body().asString());
+        String mystr = "[{\"key\":[\"20190514\",\"9577242\"],\"results\":[\"" + savedEvent1.get_id() + "\"]}]";
+
+        JSONAssert.assertEquals(mystr, response.body().asString(), false);
+
+    }
+
 
     @Test
     public void testController2() throws IOException {
