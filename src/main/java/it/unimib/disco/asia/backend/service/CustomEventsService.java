@@ -18,7 +18,6 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Service
@@ -168,14 +167,20 @@ public class CustomEventsService {
         genIndex = buildGeneralSubQuery(genIndex, stringBuilder, bindVars,
                 unit.getPropertyID(), unit.getOperator(), Float.parseFloat(unit.getValue()));
 
-        stringBuilder.append("OR\n");
-        String date = DateParserUtils.parseDateTime(unit.getValue()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        try {
 
-        String value = "@value" + genIndex;
-        bindVars.put("value" + genIndex, date);
-        genIndex += 1;
+            String date = DateParserUtils.parseDateTime(unit.getValue()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        stringBuilder.append("DATE_TRUNC(event." + unit.getPropertyID() + ", \"day\")" + " " + unit.getOperator() + " DATE_TRUNC(" + value + ", \"day\")");
+
+            stringBuilder.append("OR\n");
+            String value = "@value" + genIndex;
+            bindVars.put("value" + genIndex, date);
+            genIndex += 1;
+
+            stringBuilder.append("DATE_TRUNC(event." + unit.getPropertyID() + ", \"day\")" + " " + unit.getOperator() + " DATE_TRUNC(" + value + ", \"day\")");
+        } catch (Exception e) {
+        }
+
         stringBuilder.append(System.getProperty("line.separator")); //newline
         stringBuilder.append(")\n ");
 
@@ -187,7 +192,7 @@ public class CustomEventsService {
         try {
             Date date = DateParserUtils.parseDate(value);
             return true;
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             return false;
         }
     }

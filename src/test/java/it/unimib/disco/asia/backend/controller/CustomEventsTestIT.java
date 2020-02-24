@@ -162,7 +162,7 @@ public class CustomEventsTestIT {
 
 
         System.out.println(response.body().asString());
-        String mystr = "[{\"key\":[\"20190514\",\"9577242\"],\"results\":[\"" + savedEvent1.get_id() + "\"]}]";
+        String mystr = "[{\"key\":[\"20190514\"],\"results\":[\"" + savedEvent1.get_id() + "\"]}]";
 
         JSONAssert.assertEquals(mystr, response.body().asString(), false);
 
