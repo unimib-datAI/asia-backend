@@ -28,7 +28,7 @@ public class Services {
     static {
         Conciliator[] general = {
                 new Conciliator(Service.WIKIFIER.getId()),
-                new ExternalConciliator(Service.WIKIDATA.getId(), "https://wdreconcile.toolforge.org/en/api")
+                new ExternalConciliator(Service.WIKIDATA.getId(), "https://wikidata.reconci.link/en/api")
         };
         Conciliator[] geo = {
                 new Conciliator(Service.GEONAMES.getId()),
